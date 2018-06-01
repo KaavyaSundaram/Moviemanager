@@ -1,6 +1,8 @@
 package com.example.kaavyasundaram.moviemanager.models;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable{
 
     String id;
     String title;
@@ -8,17 +10,19 @@ public class Movie {
     float voteAverage;
     float voteCount;
     String posterPath;
-    String backdroPpath;
+    String backdropPath;
 
-    public Movie(String id,String title,String overview,float voteAverage,float voteCount, String posterPath,String backdroPpath){
-        this.id=id;
-        this.title=title;
-        this.overview=overview;
-        this.voteAverage=voteAverage;
-        this.voteCount=voteCount;
-        this.posterPath=posterPath;
-        this.backdroPpath=backdroPpath;
+
+    public Movie(String id, String title, String overview, float voteAverage, float voteCount, String posterPath, String backdropPath) {
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
     }
+
     public String getId() {
         return id;
     }
@@ -60,18 +64,19 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return posterPath;
+        return String.format("https://image.tmdb.org/t/p/w342%s", posterPath);
     }
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
     }
 
-    public String getBackdroPpath() {
-        return backdroPpath;
+    public String getBackdropPath() {
+        return String.format("https://image.tmdb.org/t/p/w780%s", backdropPath);
     }
 
-    public void setBackdroPpath(String backdroPpath) {
-        this.backdroPpath = backdroPpath;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
+
 }
