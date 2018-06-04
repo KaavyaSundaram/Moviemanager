@@ -20,10 +20,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by isabelpalomar.
- */
-
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
     List<Movie> movies;
@@ -55,8 +51,9 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         holder.tvTitle.setText(movie.getTitle());
         holder.tvOverview.setText(movie.getOverview());
 
-        Picasso.with(getContext())
+        Picasso.with(this.getContext())
                 .load(movie.getPosterPath())
+                .resize(250,250)
                 .into(holder.ivMovieImage);
 
     }

@@ -10,10 +10,10 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <ImageView
             android:id="@+id/ivMovieImage"
             android:layout_width="wrap_content"
@@ -21,8 +21,10 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:scaleType="fitStart"
             app:srcCompat="@mipmap/ic_launcher"
             android:contentDescription="@string/movie_item_image"/>
+
 
         <TextView
             android:id="@+id/tvTitle"
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_small_margin"
             android:layout_marginLeft="@dimen/activity_small_margin"
-            android:maxLength="20"
+            android:maxLength="30"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             tools:text="Captain America"
