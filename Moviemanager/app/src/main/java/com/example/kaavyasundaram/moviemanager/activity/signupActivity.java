@@ -1,9 +1,10 @@
 package com.example.kaavyasundaram.moviemanager.activity;
 
 
-
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
  public class signupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+     public static final String MyPREFERENCES = "MyPrefs" ;
+     SharedPreferences sharedpreferences;
+
 
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_address) EditText _addressText;
@@ -29,16 +33,31 @@ import butterknife.ButterKnife;
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
 
-    @Override
+     ///Registered = sharedPref.getBoolean("Registered", false);
+     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        ButterKnife.bind(this);
-        Log.i("hi","inside");
-        Toast.makeText(getBaseContext(), "hello", Toast.LENGTH_LONG).show();
+         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_signup);
+         _emailText = (EditText) findViewById(R.id.input_email);
+         _passwordText = (EditText) findViewById(R.id.input_password);
+         ButterKnife.bind(this);
+
+        //Toast.makeText(getBaseContext(), "hello", Toast.LENGTH_LONG).show();
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+               String email= _emailText.getText().toString();
+               String password= _passwordText.getText().toString();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+               // editor.putBoolean("Registered", true);
+                editor.putString("Email",email);
+                editor.putString("Password",password);
+                editor.commit();
+
+
                 signup();
             }
         });
@@ -95,6 +114,7 @@ import butterknife.ButterKnife;
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
+
        // setResult(RESULT_OK, null);
         Intent intent = new Intent(getApplicationContext(),login.class);
         startActivity(intent);

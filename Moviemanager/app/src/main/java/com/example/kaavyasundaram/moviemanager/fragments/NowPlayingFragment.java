@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//import com.example.kaavyasundaram.moviemanager.R;
+
 
 
 public class NowPlayingFragment extends Fragment {

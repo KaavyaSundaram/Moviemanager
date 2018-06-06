@@ -1,7 +1,9 @@
 package com.example.kaavyasundaram.moviemanager.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,14 +15,14 @@ import android.widget.Toast;
 
 import com.example.kaavyasundaram.moviemanager.R;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class login extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedPreferences ;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
@@ -30,12 +32,23 @@ public class login extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         ButterKnife.bind(this);
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                login();
+                String email= _emailText.getText().toString();
+                String password= _passwordText.getText().toString();
+                SharedPreferences get=getSharedPreferences(MyPREFERENCES,MODE_PRIVATE);
+                String email1=get.getString("Email","");
+                String password1=get.getString("Password","");
+                if((email.equals(email1)) && (password.equals(password1))){
+                    login();
+                }
+             else{
+                    Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -63,8 +76,7 @@ public class login extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(login.this,
-                R.style.AppTheme);
+        final ProgressDialog progressDialog = new ProgressDialog(login.this, R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
@@ -82,7 +94,7 @@ public class login extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 30);
     }
 
 
