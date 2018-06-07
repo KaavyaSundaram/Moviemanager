@@ -15,11 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaavyasundaram.moviemanager.R;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
  public class signupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+   public static final String TAG = "SignupActivity";
      public static final String MyPREFERENCES = "MyPrefs" ;
      SharedPreferences sharedpreferences;
 
@@ -33,7 +34,6 @@ import butterknife.ButterKnife;
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
 
-     ///Registered = sharedPref.getBoolean("Registered", false);
      @Override
     public void onCreate(Bundle savedInstanceState) {
          sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -48,17 +48,19 @@ import butterknife.ButterKnife;
             @Override
             public void onClick(View v) {
 
-               String email= _emailText.getText().toString();
-               String password= _passwordText.getText().toString();
+                String email= _emailText.getText().toString();
+                String password= _passwordText.getText().toString();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-
-               // editor.putBoolean("Registered", true);
-                editor.putString("Email",email);
-                editor.putString("Password",password);
+                Gson gson = new Gson();
+                MyObject Myobject = new MyObject(email,password);
+                String json = gson.toJson(Myobject);
+                //editor.putString("Email",email);
+                //editor.putString("Password",password);
+                Log.i("user",json);
+                editor.putString(email, json);
                 editor.commit();
-
-
                 signup();
+
             }
         });
 
@@ -89,7 +91,6 @@ import butterknife.ButterKnife;
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
-
         String name = _nameText.getText().toString();
         String address = _addressText.getText().toString();
         String email = _emailText.getText().toString();

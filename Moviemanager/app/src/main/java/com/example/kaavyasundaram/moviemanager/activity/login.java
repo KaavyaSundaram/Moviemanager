@@ -14,11 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaavyasundaram.moviemanager.R;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class login extends AppCompatActivity {
+    ArrayList<String>email=new ArrayList<>();
+    ArrayList<String>password=new ArrayList<>();
+
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     public static final String MyPREFERENCES = "MyPrefs" ;
@@ -32,25 +38,39 @@ public class login extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
+
+
+
+
         sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         ButterKnife.bind(this);
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String email= _emailText.getText().toString();
-                String password= _passwordText.getText().toString();
-                SharedPreferences get=getSharedPreferences(MyPREFERENCES,MODE_PRIVATE);
-                String email1=get.getString("Email","");
-                String password1=get.getString("Password","");
-                if((email.equals(email1)) && (password.equals(password1))){
-                    login();
-                }
-             else{
-                    Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                String email2= _emailText.getText().toString();
+                String password2= _passwordText.getText().toString();
+                SharedPreferences set=getSharedPreferences(MyPREFERENCES,MODE_PRIVATE);
+                if (set.contains(email2)) {
+                    Gson gson = new Gson();
+                    String json = set.getString(email2, "");
+                    Log.i("json", json);
+                    MyObject Myobject = gson.fromJson(json, MyObject.class);
+                    //String email1 = set.getString("Email", "");
+                    //String password1 = set.getString("Password", "");
+
+                    //String json = sharedPreferences.getString("MyObject", "");
+
+
+                    if ((email2.equals(Myobject.email)) && (password2.equals(Myobject.password))) {
+                        login();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
+
 
         _signupLink.setOnClickListener(new View.OnClickListener() {
 
